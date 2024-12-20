@@ -32,7 +32,7 @@ const map = new Map({
       }),
     }),
   ],
-  target: 'map',
+  target: 'map',  // Pastikan elemen dengan id="map" ada di HTML
   view: new View({
     center: [0, 0],
     zoom: 2,
