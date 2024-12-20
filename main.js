@@ -3,11 +3,11 @@ import Map from 'https://cdn.skypack.dev/ol/Map.js';
 import Point from 'https://cdn.skypack.dev/ol/geom/Point.js';
 import View from 'https://cdn.skypack.dev/ol/View.js';
 import { Icon, Style } from 'https://cdn.skypack.dev/ol/style.js';
-import { Tile as TileLayer, Vector as VectorLayer } from 'https://cdn.skypack.dev/ol/layer.js';
+import { Tile as TileLayer, Vector as VectorLayer, Image as ImageLayer } from 'https://cdn.skypack.dev/ol/layer.js';
 import { OSM } from 'https://cdn.skypack.dev/ol/source.js';
 import { Vector as VectorSource } from 'https://cdn.skypack.dev/ol/source.js';
 import { fromLonLat } from 'https://cdn.skypack.dev/ol/proj.js';
-import GeoTIFF from 'https://cdn.jsdelivr.net/npm/geotiff@1.0.0-beta.4/dist/geotiff.bundle.js';  // Gunakan versi yang lebih lama yang kompatibel
+import GeoTIFF from 'https://cdn.skypack.dev/geotiff@1.0.0-beta.4';
 import ImageStatic from 'https://cdn.skypack.dev/ol/source/ImageStatic.js';
 
 // Membuat fitur untuk beberapa kota
@@ -78,7 +78,7 @@ async function loadGeoTIFF() {
         const extent = image.getExtent();
 
         // Menambahkan layer GeoTIFF sebagai raster
-        const geoTIFFLayer = new TileLayer({
+        const geoTIFFLayer = new ImageLayer({
             source: new ImageStatic({
                 url: 'https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/n38w077/USGS_1_n38w077.tif',  // URL file GeoTIFF
                 imageExtent: extent, // Mendapatkan extent dari image
