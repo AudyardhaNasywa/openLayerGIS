@@ -7,8 +7,7 @@ import { Tile as TileLayer, Vector as VectorLayer } from 'https://cdn.skypack.de
 import { OSM } from 'https://cdn.skypack.dev/ol/source.js';
 import { Vector as VectorSource } from 'https://cdn.skypack.dev/ol/source.js';
 import { fromLonLat } from 'https://cdn.skypack.dev/ol/proj.js';
-import GeoTIFF from 'https://cdn.jsdelivr.net/npm/geotiff@2.1.3/dist/geotiff.min.js';
-
+import GeoTIFF from 'https://cdn.skypack.dev/geotiff';
 
 // Membuat fitur untuk beberapa kota
 const rome = new Feature({
