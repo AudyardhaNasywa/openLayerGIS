@@ -1,7 +1,7 @@
-// Menggunakan Skypack untuk mengimpor modul-modul OpenLayers
-import ImageTile from 'https://cdn.skypack.dev/ol@10.3.1/source/ImageTile.js';
+// Mengimpor modul OpenLayers dengan benar dari Skypack
 import Map from 'https://cdn.skypack.dev/ol@10.3.1/Map.js';
 import View from 'https://cdn.skypack.dev/ol@10.3.1/View.js';
+import ImageTile from 'https://cdn.skypack.dev/ol@10.3.1/source/ImageTile.js';
 import {
   DragAndDrop,
   defaults as defaultInteractions,
@@ -13,6 +13,7 @@ import {
 } from 'https://cdn.skypack.dev/ol@10.3.1/layer.js';
 import {Vector as VectorSource} from 'https://cdn.skypack.dev/ol@10.3.1/source.js';
 
+// Menyiapkan interaksi drag-and-drop
 const dragAndDropInteraction = new DragAndDrop({
   formatConstructors: [GPX, GeoJSON, IGC, KML, TopoJSON],
 });
@@ -42,6 +43,7 @@ const map = new Map({
   }),
 });
 
+// Menambahkan fitur ketika gambar di-drag-and-drop
 dragAndDropInteraction.on('addfeatures', function (event) {
   const vectorSource = new VectorSource({
     features: event.features,
@@ -54,6 +56,7 @@ dragAndDropInteraction.on('addfeatures', function (event) {
   map.getView().fit(vectorSource.getExtent());
 });
 
+// Menampilkan informasi fitur yang di-klik atau di-hover
 const displayFeatureInfo = function (pixel) {
   const features = [];
   map.forEachFeatureAtPixel(pixel, function (feature) {
@@ -71,6 +74,7 @@ const displayFeatureInfo = function (pixel) {
   }
 };
 
+// Event untuk pointermove dan klik untuk menampilkan info fitur
 map.on('pointermove', function (evt) {
   if (evt.dragging) {
     return;
