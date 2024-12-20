@@ -6,12 +6,12 @@ import {
   DragAndDrop,
   defaults as defaultInteractions,
 } from 'https://cdn.skypack.dev/ol@10.3.1/interaction.js';
-import {GPX, GeoJSON, IGC, KML, TopoJSON} from 'https://cdn.skypack.dev/ol@10.3.1/format.js';
+import { GPX, GeoJSON, IGC, KML, TopoJSON } from 'https://cdn.skypack.dev/ol@10.3.1/format.js';
 import {
   Tile as TileLayer,
   VectorImage as VectorImageLayer,
 } from 'https://cdn.skypack.dev/ol@10.3.1/layer.js';
-import {Vector as VectorSource} from 'https://cdn.skypack.dev/ol@10.3.1/source.js';
+import { Vector as VectorSource } from 'https://cdn.skypack.dev/ol@10.3.1/source.js';
 
 // Menyiapkan interaksi drag-and-drop
 const dragAndDropInteraction = new DragAndDrop({
@@ -51,7 +51,7 @@ dragAndDropInteraction.on('addfeatures', function (event) {
   map.addLayer(
     new VectorImageLayer({
       source: vectorSource,
-    }),
+    })
   );
   map.getView().fit(vectorSource.getExtent());
 });
