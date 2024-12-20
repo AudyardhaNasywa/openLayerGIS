@@ -1,15 +1,11 @@
 // Mengimpor modul OpenLayers dengan benar dari Skypack
 import Map from 'https://cdn.skypack.dev/ol@10.3.1/Map.js';
 import View from 'https://cdn.skypack.dev/ol@10.3.1/View.js';
-import { Tile as TileLayer } from 'https://cdn.skypack.dev/ol@10.3.1/layer.js';  // Mengimpor TileLayer dari sumber yang benar
-import ImageLayer from 'https://cdn.skypack.dev/ol@10.3.1/layer/Image.js';  // ImageLayer digunakan untuk layer gambar
-import ImageSource from 'https://cdn.skypack.dev/ol@10.3.1/source/Image.js';  // ImageSource digunakan untuk sumber gambar
+import { Tile as TileLayer } from 'https://cdn.skypack.dev/ol@10.3.1/layer.js';
+import ImageTile from 'https://cdn.skypack.dev/ol@10.3.1/source/ImageTile.js';  // Untuk tile gambar
 import { DragAndDrop, defaults as defaultInteractions } from 'https://cdn.skypack.dev/ol@10.3.1/interaction.js';
 import { GPX, GeoJSON, IGC, KML, TopoJSON } from 'https://cdn.skypack.dev/ol@10.3.1/format.js';
 import { Vector as VectorSource } from 'https://cdn.skypack.dev/ol@10.3.1/source.js';
-
-// Mengimpor GeoTIFF.js dari Skypack
-import * as GeoTIFF from 'https://cdn.skypack.dev/geotiff@2.1.3';
 
 // Menyiapkan interaksi drag-and-drop
 const dragAndDropInteraction = new DragAndDrop({
@@ -42,38 +38,6 @@ const map = new Map({
     zoom: 2,
   }),
 });
-
-// Fungsi untuk membuka dan memuat file GeoTIFF
-async function loadGeoTIFF(url) {
-  try {
-    const response = await fetch(url);
-    const arrayBuffer = await response.arrayBuffer();
-    const tiff = await GeoTIFF.fromArrayBuffer(arrayBuffer);
-    const image = await tiff.getImage();
-    const width = image.getWidth();
-    const height = image.getHeight();
-    const rasterData = await image.readRasters();
-    
-    // Menggunakan data raster untuk membuat layer gambar
-    const imageLayer = new ImageLayer({
-      source: new ImageSource({
-        attributions: attributions,
-        url: (extent, resolution, pixelRatio, projection) => {
-          // Menyediakan URL untuk gambar yang telah diolah
-          return image.getData(); 
-        },
-      }),
-    });
-
-    // Menambahkan layer gambar GeoTIFF ke peta
-    map.addLayer(imageLayer);
-  } catch (error) {
-    console.error("Gagal memuat GeoTIFF:", error);
-  }
-}
-
-// Panggil fungsi loadGeoTIFF dengan URL file GeoTIFF yang sesuai
-loadGeoTIFF('path/to/your/geotiff/file.tif');
 
 // Menambahkan fitur ketika gambar di-drag-and-drop
 dragAndDropInteraction.on('addfeatures', function (event) {
