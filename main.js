@@ -18,7 +18,7 @@ const dragAndDropInteraction = new DragAndDrop({
   formatConstructors: [GPX, GeoJSON, IGC, KML, TopoJSON],
 });
 
-const key = 'Get your own API key at https://www.maptiler.com/cloud/';
+const key = 'AD1kEbMLVtQ725FfH4xp';
 const attributions =
   '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' +
   '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>';
