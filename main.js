@@ -13,16 +13,21 @@ import {
 } from 'https://cdn.skypack.dev/ol@10.3.1/layer.js';
 import { Vector as VectorSource } from 'https://cdn.skypack.dev/ol@10.3.1/source.js';
 
+// Mengimpor GeoTIFF.js dari Skypack
+import * as GeoTIFF from 'https://cdn.skypack.dev/geotiff@2.1.3';
+
 // Menyiapkan interaksi drag-and-drop
 const dragAndDropInteraction = new DragAndDrop({
   formatConstructors: [GPX, GeoJSON, IGC, KML, TopoJSON],
 });
 
+// Kunci dan atribusi untuk peta
 const key = 'AD1kEbMLVtQ725FfH4xp';
 const attributions =
   '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' +
   '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>';
 
+// Membuat peta OpenLayers
 const map = new Map({
   interactions: defaultInteractions().extend([dragAndDropInteraction]),
   layers: [
@@ -42,6 +47,23 @@ const map = new Map({
     zoom: 2,
   }),
 });
+
+// Fungsi untuk membuka dan memuat file GeoTIFF
+async function loadGeoTIFF(url) {
+  try {
+    const response = await fetch(url);
+    const arrayBuffer = await response.arrayBuffer();
+    const tiff = await GeoTIFF.fromArrayBuffer(arrayBuffer);
+    const image = await tiff.getImage();
+    console.log(image); // Tampilkan informasi gambar TIFF di konsol
+    // Kamu bisa menambahkan pemrosesan gambar lebih lanjut di sini
+  } catch (error) {
+    console.error("Gagal memuat GeoTIFF:", error);
+  }
+}
+
+// Panggil fungsi loadGeoTIFF dengan URL file GeoTIFF yang sesuai
+loadGeoTIFF('path/to/your/geotiff/file.tif');
 
 // Menambahkan fitur ketika gambar di-drag-and-drop
 dragAndDropInteraction.on('addfeatures', function (event) {
