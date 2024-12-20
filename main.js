@@ -1,13 +1,11 @@
 // Mengimpor modul OpenLayers dengan benar dari Skypack
 import Map from 'https://cdn.skypack.dev/ol@10.3.1/Map.js';
 import View from 'https://cdn.skypack.dev/ol@10.3.1/View.js';
-import TileLayer from 'https://cdn.skypack.dev/ol@10.3.1/layer/Tile.js';
-import ImageLayer from 'https://cdn.skypack.dev/ol@10.3.1/layer/Image.js';
-import ImageSource from 'https://cdn.skypack.dev/ol@10.3.1/source/Image.js';
-import ImageTile from 'https://cdn.skypack.dev/ol@10.3.1/source/ImageTile.js';
-import { defaults as defaultInteractions, DragAndDrop } from 'https://cdn.skypack.dev/ol@10.3.1/interaction.js';
+import { Tile as TileLayer } from 'https://cdn.skypack.dev/ol@10.3.1/layer.js';  // Mengimpor TileLayer dari sumber yang benar
+import ImageLayer from 'https://cdn.skypack.dev/ol@10.3.1/layer/Image.js';  // ImageLayer digunakan untuk layer gambar
+import ImageSource from 'https://cdn.skypack.dev/ol@10.3.1/source/Image.js';  // ImageSource digunakan untuk sumber gambar
+import { DragAndDrop, defaults as defaultInteractions } from 'https://cdn.skypack.dev/ol@10.3.1/interaction.js';
 import { GPX, GeoJSON, IGC, KML, TopoJSON } from 'https://cdn.skypack.dev/ol@10.3.1/format.js';
-import { Tile as TileLayer, VectorImage as VectorImageLayer } from 'https://cdn.skypack.dev/ol@10.3.1/layer.js';
 import { Vector as VectorSource } from 'https://cdn.skypack.dev/ol@10.3.1/source.js';
 
 // Mengimpor GeoTIFF.js dari Skypack
