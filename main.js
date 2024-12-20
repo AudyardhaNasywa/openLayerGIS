@@ -1,83 +1,99 @@
-// Mengimpor modul OpenLayers dengan benar dari Skypack
-import Map from 'https://cdn.skypack.dev/ol@10.3.1/Map.js';
-import View from 'https://cdn.skypack.dev/ol@10.3.1/View.js';
-import { Tile as TileLayer } from 'https://cdn.skypack.dev/ol@10.3.1/layer.js';
-import ImageTile from 'https://cdn.skypack.dev/ol@10.3.1/source/ImageTile.js';  // Untuk tile gambar
-import { DragAndDrop, defaults as defaultInteractions } from 'https://cdn.skypack.dev/ol@10.3.1/interaction.js';
-import { GPX, GeoJSON, IGC, KML, TopoJSON } from 'https://cdn.skypack.dev/ol@10.3.1/format.js';
-import { Vector as VectorSource } from 'https://cdn.skypack.dev/ol@10.3.1/source.js';
+import Feature from 'ol/Feature.js';
+import Map from 'ol/Map.js';
+import Point from 'ol/geom/Point.js';
+import View from 'ol/View.js';
+import {Icon, Style} from 'ol/style.js';
+import {OGCMapTile, Vector as VectorSource} from 'ol/source.js';
+import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer.js';
+import {fromLonLat} from 'ol/proj.js';
 
-// Menyiapkan interaksi drag-and-drop
-const dragAndDropInteraction = new DragAndDrop({
-  formatConstructors: [GPX, GeoJSON, IGC, KML, TopoJSON],
+const rome = new Feature({
+  geometry: new Point(fromLonLat([12.5, 41.9])),
 });
 
-// Kunci dan atribusi untuk peta
-const key = 'AD1kEbMLVtQ725FfH4xp';
-const attributions =
-  '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' +
-  '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>';
+const london = new Feature({
+  geometry: new Point(fromLonLat([-0.12755, 51.507222])),
+});
 
-// Membuat peta OpenLayers
-const map = new Map({
-  interactions: defaultInteractions().extend([dragAndDropInteraction]),
-  layers: [
-    new TileLayer({
-      source: new ImageTile({
-        attributions: attributions,
-        url:
-          'https://api.maptiler.com/maps/satellite/{z}/{x}/{y}.jpg?key=' + key,
-        tileSize: 512,
-        maxZoom: 20,
-      }),
+const madrid = new Feature({
+  geometry: new Point(fromLonLat([-3.683333, 40.4])),
+});
+const paris = new Feature({
+  geometry: new Point(fromLonLat([2.353, 48.8566])),
+});
+const berlin = new Feature({
+  geometry: new Point(fromLonLat([13.3884, 52.5169])),
+});
+
+rome.setStyle(
+  new Style({
+    image: new Icon({
+      color: '#BADA55',
+      crossOrigin: 'anonymous',
+      src: 'data/square.svg',
     }),
-  ],
-  target: 'map',  // Pastikan elemen dengan id="map" ada di HTML
-  view: new View({
-    center: [0, 0],
-    zoom: 2,
+  }),
+);
+
+london.setStyle(
+  new Style({
+    image: new Icon({
+      color: 'rgba(255, 0, 0, .5)',
+      crossOrigin: 'anonymous',
+      src: 'data/bigdot.png',
+      scale: 0.2,
+    }),
+  }),
+);
+
+madrid.setStyle(
+  new Style({
+    image: new Icon({
+      crossOrigin: 'anonymous',
+      src: 'data/bigdot.png',
+      scale: 0.2,
+    }),
+  }),
+);
+
+paris.setStyle(
+  new Style({
+    image: new Icon({
+      color: '#8959A8',
+      crossOrigin: 'anonymous',
+      src: 'data/dot.svg',
+    }),
+  }),
+);
+
+berlin.setStyle(
+  new Style({
+    image: new Icon({
+      crossOrigin: 'anonymous',
+      src: 'data/dot.svg',
+    }),
+  }),
+);
+const vectorSource = new VectorSource({
+  features: [rome, london, madrid, paris, berlin],
+});
+
+const vectorLayer = new VectorLayer({
+  source: vectorSource,
+});
+
+const rasterLayer = new TileLayer({
+  source: new OGCMapTile({
+    url: 'https://maps.gnosis.earth/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map/tiles/WebMercatorQuad',
+    crossOrigin: '',
   }),
 });
 
-// Menambahkan fitur ketika gambar di-drag-and-drop
-dragAndDropInteraction.on('addfeatures', function (event) {
-  const vectorSource = new VectorSource({
-    features: event.features,
-  });
-  map.addLayer(
-    new VectorImageLayer({
-      source: vectorSource,
-    })
-  );
-  map.getView().fit(vectorSource.getExtent());
-});
-
-// Menampilkan informasi fitur yang di-klik atau di-hover
-const displayFeatureInfo = function (pixel) {
-  const features = [];
-  map.forEachFeatureAtPixel(pixel, function (feature) {
-    features.push(feature);
-  });
-  if (features.length > 0) {
-    const info = [];
-    let i, ii;
-    for (i = 0, ii = features.length; i < ii; ++i) {
-      info.push(features[i].get('name'));
-    }
-    document.getElementById('info').innerHTML = info.join(', ') || '&nbsp';
-  } else {
-    document.getElementById('info').innerHTML = '&nbsp;';
-  }
-};
-
-// Event untuk pointermove dan klik untuk menampilkan info fitur
-map.on('pointermove', function (evt) {
-  if (evt.dragging) {
-    return;
-  }
-  displayFeatureInfo(evt.pixel);
-});
-
-map.on('click', function (evt) {
-  displayFeatureInfo(evt.pixel);
+const map = new Map({
+  layers: [rasterLayer, vectorLayer],
+  target: document.getElementById('map'),
+  view: new View({
+    center: fromLonLat([2.896372, 44.6024]),
+    zoom: 3,
+  }),
 });
