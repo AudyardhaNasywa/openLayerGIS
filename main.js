@@ -7,8 +7,8 @@ import { Tile as TileLayer, Vector as VectorLayer } from 'https://cdn.skypack.de
 import { OSM } from 'https://cdn.skypack.dev/ol/source.js';
 import { Vector as VectorSource } from 'https://cdn.skypack.dev/ol/source.js';
 import { fromLonLat } from 'https://cdn.skypack.dev/ol/proj.js';
-import GeoTIFF from 'https://cdn.skypack.dev/geotiff@2.0.0';
-import ImageStatic from 'https://cdn.skypack.dev/ol/source/ImageStatic.js'; // Import ImageStatic
+import GeoTIFF from 'https://cdn.jsdelivr.net/npm/geotiff@1.0.0-beta.4/dist/geotiff.bundle.js';
+import ImageStatic from 'https://cdn.skypack.dev/ol/source/ImageStatic.js';
 
 // Membuat fitur untuk beberapa kota
 const rome = new Feature({
@@ -70,8 +70,7 @@ const map = new Map({
 // Fungsi untuk menambahkan layer GeoTIFF
 async function loadGeoTIFF() {
     try {
-        // Menggunakan URL GeoTIFF yang valid
-        const tiff = await GeoTIFF.fromUrl('https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/n38w077/USGS_1_n38w077.tif'); // URL GeoTIFF yang valid
+        const tiff = await GeoTIFF.fromUrl('https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/n38w077/USGS_1_n38w077.tif'); // URL GeoTIFF
         const image = await tiff.getImage();
 
         // Mendapatkan extent dari image untuk digunakan pada ImageStatic
