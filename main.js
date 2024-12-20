@@ -1,12 +1,12 @@
-import Feature from 'https://cdn.jsdelivr.net/npm/ol@6.14.1/esm/Feature.js';
-import Map from 'https://cdn.jsdelivr.net/npm/ol@6.14.1/esm/Map.js';
-import Point from 'https://cdn.jsdelivr.net/npm/ol@6.14.1/esm/geom/Point.js';
-import View from 'https://cdn.jsdelivr.net/npm/ol@6.14.1/esm/View.js';
-import { Icon, Style } from 'https://cdn.jsdelivr.net/npm/ol@6.14.1/esm/style.js';
-import { Tile as TileLayer, Vector as VectorLayer } from 'https://cdn.jsdelivr.net/npm/ol@6.14.1/esm/layer.js';
-import { OSM } from 'https://cdn.jsdelivr.net/npm/ol@6.14.1/esm/source.js';
-import { Vector as VectorSource } from 'https://cdn.jsdelivr.net/npm/ol@6.14.1/esm/source.js';
-import { fromLonLat } from 'https://cdn.jsdelivr.net/npm/ol@6.14.1/esm/proj.js';
+import Feature from 'https://cdn.skypack.dev/ol/Feature.js';
+import Map from 'https://cdn.skypack.dev/ol/Map.js';
+import Point from 'https://cdn.skypack.dev/ol/geom/Point.js';
+import View from 'https://cdn.skypack.dev/ol/View.js';
+import { Icon, Style } from 'https://cdn.skypack.dev/ol/style.js';
+import { Tile as TileLayer, Vector as VectorLayer } from 'https://cdn.skypack.dev/ol/layer.js';
+import { OSM } from 'https://cdn.skypack.dev/ol/source.js';
+import { Vector as VectorSource } from 'https://cdn.skypack.dev/ol/source.js';
+import { fromLonLat } from 'https://cdn.skypack.dev/ol/proj.js';
 
 // Membuat fitur untuk beberapa kota
 const rome = new Feature({
