@@ -1,16 +1,17 @@
-import ImageTile from 'ol/source/ImageTile.js';
-import Map from 'ol/Map.js';
-import View from 'ol/View.js';
+// Menggunakan Skypack untuk mengimpor modul-modul OpenLayers
+import ImageTile from 'https://cdn.skypack.dev/ol@latest/source/ImageTile.js';
+import Map from 'https://cdn.skypack.dev/ol@latest/Map.js';
+import View from 'https://cdn.skypack.dev/ol@latest/View.js';
 import {
   DragAndDrop,
   defaults as defaultInteractions,
-} from 'ol/interaction.js';
-import {GPX, GeoJSON, IGC, KML, TopoJSON} from 'ol/format.js';
+} from 'https://cdn.skypack.dev/ol@latest/interaction.js';
+import {GPX, GeoJSON, IGC, KML, TopoJSON} from 'https://cdn.skypack.dev/ol@latest/format.js';
 import {
   Tile as TileLayer,
   VectorImage as VectorImageLayer,
-} from 'ol/layer.js';
-import {Vector as VectorSource} from 'ol/source.js';
+} from 'https://cdn.skypack.dev/ol@latest/layer.js';
+import {Vector as VectorSource} from 'https://cdn.skypack.dev/ol@latest/source.js';
 
 const dragAndDropInteraction = new DragAndDrop({
   formatConstructors: [GPX, GeoJSON, IGC, KML, TopoJSON],
