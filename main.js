@@ -8,6 +8,7 @@ import { OSM } from 'https://cdn.skypack.dev/ol/source.js';
 import { Vector as VectorSource } from 'https://cdn.skypack.dev/ol/source.js';
 import { fromLonLat } from 'https://cdn.skypack.dev/ol/proj.js';
 import GeoTIFF from 'https://cdn.skypack.dev/geotiff';
+import ImageStatic from 'https://cdn.skypack.dev/ol/source/ImageStatic.js';  // Import ImageStatic
 
 // Membuat fitur untuk beberapa kota
 const rome = new Feature({
@@ -30,51 +31,11 @@ const berlin = new Feature({
     geometry: new Point(fromLonLat([13.3884, 52.5169])),
 });
 
-// Menambahkan gaya untuk ikon setiap kota (gunakan URL ikon yang valid)
+// Menambahkan gaya untuk ikon setiap kota
 rome.setStyle(
     new Style({
         image: new Icon({
             color: '#BADA55',
-            crossOrigin: 'anonymous',
-            src: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/Blue_dot.svg',  // Ikon biru
-        }),
-    }),
-);
-
-london.setStyle(
-    new Style({
-        image: new Icon({
-            color: 'rgba(255, 0, 0, .5)',
-            crossOrigin: 'anonymous',
-            src: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/Blue_dot.svg',  // Ikon biru
-            scale: 0.2,
-        }),
-    }),
-);
-
-madrid.setStyle(
-    new Style({
-        image: new Icon({
-            crossOrigin: 'anonymous',
-            src: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/Blue_dot.svg',  // Ikon biru
-            scale: 0.2,
-        }),
-    }),
-);
-
-paris.setStyle(
-    new Style({
-        image: new Icon({
-            color: '#8959A8',
-            crossOrigin: 'anonymous',
-            src: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/Blue_dot.svg',  // Ikon biru
-        }),
-    }),
-);
-
-berlin.setStyle(
-    new Style({
-        image: new Icon({
             crossOrigin: 'anonymous',
             src: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/Blue_dot.svg',  // Ikon biru
         }),
@@ -96,24 +57,6 @@ const rasterLayer = new TileLayer({
     source: new OSM(),  // Menggunakan peta OSM
 });
 
-// Fungsi untuk menambahkan layer GeoTIFF
-async function loadGeoTIFF() {
-    const tiff = await GeoTIFF.fromUrl('path/to/your/file.tif'); // Ubah dengan URL GeoTIFF Anda
-    const image = await tiff.getImage();
-
-    // Menambahkan layer GeoTIFF sebagai raster
-    const geoTIFFLayer = new TileLayer({
-        source: new ol.source.ImageStatic({
-            url: 'path/to/your/file.tif',  // URL file GeoTIFF
-            imageExtent: image.getExtent(), // Mendapatkan extent dari image
-        }),
-    });
-
-    map.addLayer(geoTIFFLayer); // Menambahkan GeoTIFF ke peta
-}
-
-loadGeoTIFF(); // Panggil fungsi untuk memuat GeoTIFF
-
 // Membuat peta dengan lapisan raster dan vektor
 const map = new Map({
     layers: [rasterLayer, vectorLayer], // Gabungkan layer OpenStreetMap dan vektor
@@ -124,3 +67,20 @@ const map = new Map({
     }),
 });
 
+// Fungsi untuk menambahkan layer GeoTIFF
+async function loadGeoTIFF() {
+    const tiff = await GeoTIFF.fromUrl('https://example.com/your-geotiff-file.tif'); // URL GeoTIFF Anda
+    const image = await tiff.getImage();
+
+    // Menambahkan layer GeoTIFF sebagai raster
+    const geoTIFFLayer = new TileLayer({
+        source: new ImageStatic({
+            url: 'https://example.com/your-geotiff-file.tif',  // URL file GeoTIFF
+            imageExtent: image.getExtent(), // Mendapatkan extent dari image
+        }),
+    });
+
+    map.addLayer(geoTIFFLayer); // Menambahkan GeoTIFF ke peta
+}
+
+loadGeoTIFF(); // Panggil fungsi untuk memuat GeoTIFF
